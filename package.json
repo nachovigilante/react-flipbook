@@ -1,7 +1,7 @@
 {
     "name": "react-flipbook",
     "version": "1.0.0",
-    "description": "",
+    "description": "A simple flipbook component for React",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "scripts": {
@@ -10,8 +10,22 @@
         "build:esm": "tsc",
         "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
     },
-    "keywords": [],
+    "keywords": [
+        "react",
+        "flipbook",
+        "animation",
+        "component",
+        "book"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nachovigilante/react-flipbook.git"
+    },
     "author": "Ignacio Vigilante",
+    "bugs": {
+        "url": "https://github.com/nachovigilante/react-flipbook/issues"
+    },
+    "homepage": "https://github.com/nachovigilante/react-flipbook#readme",
     "license": "MIT",
     "devDependencies": {
         "@types/node": "^20.11.24",

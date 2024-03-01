@@ -16,7 +16,6 @@ export function Flipbook({
 }: {
     pageSize: { width: number; height: number };
     pages: React.ReactNode[];
-    flipSpeed?: number;
 }) {
     const bookRef = createRef<HTMLDivElement>();
     const DELTA = 0.00001;
