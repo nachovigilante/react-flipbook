@@ -5,16 +5,16 @@ const react_1 = require("react");
 const util_1 = require("../utils/util");
 function useInterpolatingValue(pageSize, initialValue) {
     const [value, setValue] = (0, react_1.useState)(initialValue);
-    const to = (val, onInterpolationEnd) => {
+    const to = (val, onInterpolationEnd, resetOnInterpolationEnd = false) => {
         const step = (0, util_1.clamp)((Math.abs(val - value) / pageSize.width) * 0.05, 0, 0.05);
         const interval = setInterval(() => {
             if (value < val) {
                 setValue((prev) => {
-                    // console.log(prev, val);
+                    // console.log(prev, val - pageSize.width * step * 1.2);
                     if (prev >= val - pageSize.width * step * 1.2) {
                         clearInterval(interval);
                         onInterpolationEnd && onInterpolationEnd();
-                        return val;
+                        return resetOnInterpolationEnd ? initialValue : val;
                     }
                     return prev + pageSize.width * step;
                 });
@@ -25,7 +25,7 @@ function useInterpolatingValue(pageSize, initialValue) {
                     if (prev <= val + pageSize.width * step * 1.2) {
                         clearInterval(interval);
                         onInterpolationEnd && onInterpolationEnd();
-                        return val;
+                        return resetOnInterpolationEnd ? initialValue : val;
                     }
                     return prev - pageSize.width * step;
                 });

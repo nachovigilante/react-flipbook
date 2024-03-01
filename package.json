@@ -1,11 +1,11 @@
 {
-    "name": "react-flipbook",
+    "name": "react-flipbook-nv",
     "version": "1.0.0",
     "description": "A simple flipbook component for React",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "scripts": {
-        "format": "prettier --write .",
+        "format": "prettier --write src/**/*",
         "build": "npm run format && npm run build:esm && npm run build:cjs",
         "build:esm": "tsc",
         "build:cjs": "tsc --module CommonJS --outDir dist/cjs"

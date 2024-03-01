@@ -3,6 +3,6 @@ export declare function useInterpolatingValue(pageSize: {
     height: number;
 }, initialValue: number): {
     value: number;
-    to: (val: number, onInterpolationEnd?: () => void) => void;
+    to: (val: number, onInterpolationEnd?: () => void, resetOnInterpolationEnd?: boolean) => void;
     immediateTo: (val: number) => void;
 };

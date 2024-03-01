@@ -9,5 +9,4 @@ export declare function Flipbook({ pageSize, pages, }: {
         height: number;
     };
     pages: React.ReactNode[];
-    flipSpeed?: number;
 }): React.JSX.Element;

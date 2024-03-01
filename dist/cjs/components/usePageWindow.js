@@ -14,8 +14,14 @@ function usePageWindow(pageCount) {
             return state - 2;
         }
     }, 0);
-    const incrementWindow = () => dispatch({ type: 'INCREMENT' });
-    const decrementWindow = () => dispatch({ type: 'DECREMENT' });
+    const incrementWindow = () => {
+        // console.log('INCREMENT');
+        dispatch({ type: 'INCREMENT' });
+    };
+    const decrementWindow = () => {
+        // console.log('DECREMENT');
+        dispatch({ type: 'DECREMENT' });
+    };
     return {
         pageWindowStart,
         incrementWindow,

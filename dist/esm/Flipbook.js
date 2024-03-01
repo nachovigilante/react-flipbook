@@ -25,26 +25,21 @@ export function Flipbook({ pageSize, pages, }) {
         React.createElement("div", { key: "padding-right", style: { width: pageSize.width, height: pageSize.height } }),
     ];
     const flip = (side) => {
+        // console.log('flip');
         bookRef.current.style.cursor = 'default';
         setIsFlipping(true);
         if (side === PageDirection.LEFT) {
             interpolateLeftDragX(pageSize.width * 2 - DELTA, () => {
-                setTimeout(() => {
-                    decrementWindow();
-                    immediateReset();
-                }, 1);
+                decrementWindow();
                 setIsFlipping(false);
-            });
+            }, true);
             interpolateLeftDragY(pageSize.height - DELTA);
         }
         else {
             interpolateRightDragX(DELTA, () => {
-                setTimeout(() => {
-                    incrementWindow();
-                    immediateReset();
-                }, 1);
+                incrementWindow();
                 setIsFlipping(false);
-            });
+            }, true);
             interpolateRightDragY(pageSize.height - DELTA);
         }
     };
@@ -55,12 +50,12 @@ export function Flipbook({ pageSize, pages, }) {
         interpolateRightDragX(pageSize.width * 2 - DELTA);
         interpolateRightDragY(pageSize.height - DELTA);
     };
-    const immediateReset = () => {
-        setLeftDragX(DELTA);
-        setLeftDragY(pageSize.height - DELTA);
-        setRightDragX(pageSize.width * 2 - DELTA);
-        setRightDragY(pageSize.height - DELTA);
-    };
+    // const immediateReset = () => {
+    //     setLeftDragX(DELTA);
+    //     setLeftDragY(pageSize.height - DELTA);
+    //     setRightDragX(pageSize.width * 2 - DELTA);
+    //     setRightDragY(pageSize.height - DELTA);
+    // };
     const handleMouseMove = (e) => {
         if (isFlipping || !bookRef.current)
             return;
@@ -122,7 +117,6 @@ export function Flipbook({ pageSize, pages, }) {
             return;
         if (draggingSide === PageDirection.LEFT &&
             leftDragX > pageSize.width / 2) {
-            console.log('left');
             flip(PageDirection.LEFT);
         }
         else if (draggingSide === PageDirection.RIGHT &&
