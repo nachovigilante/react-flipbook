@@ -40,7 +40,7 @@ export function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rig
         foldedLength,
     ]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible }), leftPageChildren),
+        React.createElement(Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible, interactive: true }), leftPageChildren),
         React.createElement("div", { style: {
                 position: 'absolute',
                 zIndex: 50,

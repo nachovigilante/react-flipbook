@@ -41,7 +41,7 @@ export function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, ri
         foldedLength,
     ]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(Page, Object.assign({}, pageSize, { side: "right", clipPath: rightClipPath, zIndex: 1, invisible: invisible }), rightPageChildren),
+        React.createElement(Page, Object.assign({}, pageSize, { side: "right", clipPath: rightClipPath, zIndex: 1, invisible: invisible, interactive: true }), rightPageChildren),
         React.createElement("div", { className: "drop-shadow-2xl", style: {
                 position: 'absolute',
                 zIndex: 50,

@@ -11,6 +11,7 @@ type PageProps = {
     transformOrigin?: string;
     zIndex?: number;
     invisible?: boolean;
+    interactive?: boolean;
 };
 
 export function Page({
@@ -24,6 +25,7 @@ export function Page({
     transformOrigin,
     zIndex,
     invisible,
+    interactive,
 }: PageProps) {
     return (
         <div
@@ -50,6 +52,7 @@ export function Page({
                 border: '1px solid black',
                 visibility: invisible ? 'hidden' : 'visible',
             }}
+            data-interactive={interactive}
         >
             {children}
         </div>

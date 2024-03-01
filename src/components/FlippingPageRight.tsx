@@ -75,6 +75,7 @@ export function FlippingPageRight({
                 clipPath={rightClipPath}
                 zIndex={1}
                 invisible={invisible}
+                interactive
             >
                 {rightPageChildren}
             </Page>

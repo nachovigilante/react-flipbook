@@ -3,7 +3,8 @@ import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
 import usePageWindow from './components/usePageWindow';
-import { useInterpolatingValue } from './components/useInterpolatingValue';
+// import { useInterpolatingValue } from './components/useInterpolatingValue';
+import useTransitionValue from './components/useTransitionValue';
 
 export enum PageDirection {
     LEFT,
@@ -13,36 +14,37 @@ export enum PageDirection {
 export function Flipbook({
     pageSize,
     pages,
+    controls,
+    controlsClassName,
 }: {
     pageSize: { width: number; height: number };
     pages: React.ReactNode[];
+    controls?: boolean;
+    controlsClassName?: string;
 }) {
     const bookRef = createRef<HTMLDivElement>();
     const DELTA = 0.00001;
 
     const {
         value: leftDragX,
+        start: interpolateLeftDragX,
         immediateTo: setLeftDragX,
-        to: interpolateLeftDragX,
-    } = useInterpolatingValue(pageSize, DELTA);
-
+    } = useTransitionValue(DELTA);
     const {
         value: leftDragY,
+        start: interpolateLeftDragY,
         immediateTo: setLeftDragY,
-        to: interpolateLeftDragY,
-    } = useInterpolatingValue(pageSize, pageSize.height - DELTA);
-
+    } = useTransitionValue(pageSize.height - DELTA);
     const {
         value: rightDragX,
+        start: interpolateRightDragX,
         immediateTo: setRightDragX,
-        to: interpolateRightDragX,
-    } = useInterpolatingValue(pageSize, pageSize.width * 2 - DELTA);
-
+    } = useTransitionValue(pageSize.width * 2 - DELTA);
     const {
         value: rightDragY,
+        start: interpolateRightDragY,
         immediateTo: setRightDragY,
-        to: interpolateRightDragY,
-    } = useInterpolatingValue(pageSize, pageSize.height - DELTA);
+    } = useTransitionValue(pageSize.height - DELTA);
 
     const [isFlipping, setIsFlipping] = useState(false);
     const [draggingSide, setDraggingSide] = useState<PageDirection | null>(
@@ -66,30 +68,43 @@ export function Flipbook({
     ];
 
     const flip = (side: PageDirection) => {
-        // console.log('flip');
         bookRef.current!.style.cursor = 'default';
 
         setIsFlipping(true);
         if (side === PageDirection.LEFT) {
-            interpolateLeftDragX(
-                pageSize.width * 2 - DELTA,
-                () => {
+            interpolateLeftDragX(pageSize.width * 2 - DELTA, {
+                onDone: () => {
                     decrementWindow();
                     setIsFlipping(false);
+                    immediateReset();
                 },
-                true
-            );
-            interpolateLeftDragY(pageSize.height - DELTA);
+                duration: 800,
+            });
+            interpolateLeftDragY(pageSize.height - pageSize.height / 6, {
+                onDone: () => {
+                    interpolateLeftDragY(pageSize.height - DELTA, {
+                        duration: 300,
+                    });
+                },
+                duration: 300,
+            });
         } else {
-            interpolateRightDragX(
-                DELTA,
-                () => {
+            interpolateRightDragX(DELTA, {
+                onDone: () => {
                     incrementWindow();
                     setIsFlipping(false);
+                    immediateReset();
                 },
-                true
-            );
-            interpolateRightDragY(pageSize.height - DELTA);
+                duration: 800,
+            });
+            interpolateRightDragY(pageSize.height - pageSize.height / 6, {
+                onDone: () => {
+                    interpolateRightDragY(pageSize.height - DELTA, {
+                        duration: 300,
+                    });
+                },
+                duration: 300,
+            });
         }
     };
 
@@ -101,12 +116,12 @@ export function Flipbook({
         interpolateRightDragY(pageSize.height - DELTA);
     };
 
-    // const immediateReset = () => {
-    //     setLeftDragX(DELTA);
-    //     setLeftDragY(pageSize.height - DELTA);
-    //     setRightDragX(pageSize.width * 2 - DELTA);
-    //     setRightDragY(pageSize.height - DELTA);
-    // };
+    const immediateReset = () => {
+        setLeftDragX(DELTA);
+        setLeftDragY(pageSize.height - DELTA);
+        setRightDragX(pageSize.width * 2 - DELTA);
+        setRightDragY(pageSize.height - DELTA);
+    };
 
     const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
         if (isFlipping || !bookRef.current) return;
@@ -186,26 +201,35 @@ export function Flipbook({
 
     return (
         <>
-            {/* <div
-                style={{
-                    position: 'absolute',
-                    top: '20px',
-                    left: '20px',
-                    display: 'flex',
-                    gap: '8px',
-                }}
-            >
-                <button
-                    onClick={() => flip(PageDirection.LEFT)}
-                    disabled={pageWindowStart <= -2 || isFlipping}
-                >{`<-`}</button>
-                <button
-                    onClick={() => flip(PageDirection.RIGHT)}
-                    disabled={pageWindowStart >= pages.length - 2 || isFlipping}
+            {controls && (
+                <div
+                    className={controlsClassName}
+                    style={
+                        controlsClassName
+                            ? {}
+                            : {
+                                  position: 'absolute',
+                                  top: '20px',
+                                  left: '20px',
+                                  display: 'flex',
+                                  gap: '8px',
+                              }
+                    }
                 >
-                    {`->`}
-                </button>
-            </div> */}
+                    <button
+                        onClick={() => flip(PageDirection.LEFT)}
+                        disabled={pageWindowStart <= -2 || isFlipping}
+                    >{`<-`}</button>
+                    <button
+                        onClick={() => flip(PageDirection.RIGHT)}
+                        disabled={
+                            pageWindowStart >= pages.length - 2 || isFlipping
+                        }
+                    >
+                        {`->`}
+                    </button>
+                </div>
+            )}
             <div
                 style={{
                     width: pageSize.width * 2,

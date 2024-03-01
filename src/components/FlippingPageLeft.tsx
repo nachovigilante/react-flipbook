@@ -74,6 +74,7 @@ export function FlippingPageLeft({
                 clipPath={leftClipPath}
                 zIndex={1}
                 invisible={invisible}
+                interactive
             >
                 {leftPageChildren}
             </Page>

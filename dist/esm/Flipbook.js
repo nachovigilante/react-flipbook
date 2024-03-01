@@ -3,19 +3,20 @@ import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
 import usePageWindow from './components/usePageWindow';
-import { useInterpolatingValue } from './components/useInterpolatingValue';
+// import { useInterpolatingValue } from './components/useInterpolatingValue';
+import useTransitionValue from './components/useTransitionValue';
 export var PageDirection;
 (function (PageDirection) {
     PageDirection[PageDirection["LEFT"] = 0] = "LEFT";
     PageDirection[PageDirection["RIGHT"] = 1] = "RIGHT";
 })(PageDirection || (PageDirection = {}));
-export function Flipbook({ pageSize, pages, }) {
+export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
     const bookRef = createRef();
     const DELTA = 0.00001;
-    const { value: leftDragX, immediateTo: setLeftDragX, to: interpolateLeftDragX, } = useInterpolatingValue(pageSize, DELTA);
-    const { value: leftDragY, immediateTo: setLeftDragY, to: interpolateLeftDragY, } = useInterpolatingValue(pageSize, pageSize.height - DELTA);
-    const { value: rightDragX, immediateTo: setRightDragX, to: interpolateRightDragX, } = useInterpolatingValue(pageSize, pageSize.width * 2 - DELTA);
-    const { value: rightDragY, immediateTo: setRightDragY, to: interpolateRightDragY, } = useInterpolatingValue(pageSize, pageSize.height - DELTA);
+    const { value: leftDragX, start: interpolateLeftDragX, immediateTo: setLeftDragX, } = useTransitionValue(DELTA);
+    const { value: leftDragY, start: interpolateLeftDragY, immediateTo: setLeftDragY, } = useTransitionValue(pageSize.height - DELTA);
+    const { value: rightDragX, start: interpolateRightDragX, immediateTo: setRightDragX, } = useTransitionValue(pageSize.width * 2 - DELTA);
+    const { value: rightDragY, start: interpolateRightDragY, immediateTo: setRightDragY, } = useTransitionValue(pageSize.height - DELTA);
     const [isFlipping, setIsFlipping] = useState(false);
     const [draggingSide, setDraggingSide] = useState(null);
     const { pageWindowStart, incrementWindow, decrementWindow } = usePageWindow(pages.length + 2);
@@ -25,22 +26,43 @@ export function Flipbook({ pageSize, pages, }) {
         React.createElement("div", { key: "padding-right", style: { width: pageSize.width, height: pageSize.height } }),
     ];
     const flip = (side) => {
-        // console.log('flip');
         bookRef.current.style.cursor = 'default';
         setIsFlipping(true);
         if (side === PageDirection.LEFT) {
-            interpolateLeftDragX(pageSize.width * 2 - DELTA, () => {
-                decrementWindow();
-                setIsFlipping(false);
-            }, true);
-            interpolateLeftDragY(pageSize.height - DELTA);
+            interpolateLeftDragX(pageSize.width * 2 - DELTA, {
+                onDone: () => {
+                    decrementWindow();
+                    setIsFlipping(false);
+                    immediateReset();
+                },
+                duration: 800,
+            });
+            interpolateLeftDragY(pageSize.height - pageSize.height / 6, {
+                onDone: () => {
+                    interpolateLeftDragY(pageSize.height - DELTA, {
+                        duration: 300,
+                    });
+                },
+                duration: 300,
+            });
         }
         else {
-            interpolateRightDragX(DELTA, () => {
-                incrementWindow();
-                setIsFlipping(false);
-            }, true);
-            interpolateRightDragY(pageSize.height - DELTA);
+            interpolateRightDragX(DELTA, {
+                onDone: () => {
+                    incrementWindow();
+                    setIsFlipping(false);
+                    immediateReset();
+                },
+                duration: 800,
+            });
+            interpolateRightDragY(pageSize.height - pageSize.height / 6, {
+                onDone: () => {
+                    interpolateRightDragY(pageSize.height - DELTA, {
+                        duration: 300,
+                    });
+                },
+                duration: 300,
+            });
         }
     };
     const reset = () => {
@@ -50,12 +72,12 @@ export function Flipbook({ pageSize, pages, }) {
         interpolateRightDragX(pageSize.width * 2 - DELTA);
         interpolateRightDragY(pageSize.height - DELTA);
     };
-    // const immediateReset = () => {
-    //     setLeftDragX(DELTA);
-    //     setLeftDragY(pageSize.height - DELTA);
-    //     setRightDragX(pageSize.width * 2 - DELTA);
-    //     setRightDragY(pageSize.height - DELTA);
-    // };
+    const immediateReset = () => {
+        setLeftDragX(DELTA);
+        setLeftDragY(pageSize.height - DELTA);
+        setRightDragX(pageSize.width * 2 - DELTA);
+        setRightDragY(pageSize.height - DELTA);
+    };
     const handleMouseMove = (e) => {
         if (isFlipping || !bookRef.current)
             return;
@@ -129,6 +151,17 @@ export function Flipbook({ pageSize, pages, }) {
         setDraggingSide(null);
     };
     return (React.createElement(React.Fragment, null,
+        controls && (React.createElement("div", { className: controlsClassName, style: controlsClassName
+                ? {}
+                : {
+                    position: 'absolute',
+                    top: '20px',
+                    left: '20px',
+                    display: 'flex',
+                    gap: '8px',
+                } },
+            React.createElement("button", { onClick: () => flip(PageDirection.LEFT), disabled: pageWindowStart <= -2 || isFlipping }, `<-`),
+            React.createElement("button", { onClick: () => flip(PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping }, `->`))),
         React.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,
