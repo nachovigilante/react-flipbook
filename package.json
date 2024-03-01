@@ -1,0 +1,24 @@
+{
+    "name": "react-flipbook",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "scripts": {
+        "format": "prettier --write .",
+        "build": "npm run format && npm run build:esm && npm run build:cjs",
+        "build:esm": "tsc",
+        "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
+    },
+    "keywords": [],
+    "author": "Ignacio Vigilante",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^20.11.24",
+        "@types/react": "^18.2.61",
+        "@types/react-dom": "^18.2.19",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "typescript": "^5.3.3"
+    }
+}
