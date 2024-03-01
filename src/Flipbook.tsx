@@ -185,7 +185,7 @@ export function Flipbook({
 
     return (
         <>
-            <div
+            {/* <div
                 style={{
                     position: 'absolute',
                     top: '20px',
@@ -204,7 +204,7 @@ export function Flipbook({
                 >
                     {`->`}
                 </button>
-            </div>
+            </div> */}
             <div
                 style={{
                     width: pageSize.width * 2,

@@ -136,15 +136,6 @@ export function Flipbook({ pageSize, pages, }) {
     };
     return (React.createElement(React.Fragment, null,
         React.createElement("div", { style: {
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                display: 'flex',
-                gap: '8px',
-            } },
-            React.createElement("button", { onClick: () => flip(PageDirection.LEFT), disabled: pageWindowStart <= -2 || isFlipping }, `<-`),
-            React.createElement("button", { onClick: () => flip(PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping }, `->`)),
-        React.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,
             }, ref: bookRef, onMouseMove: handleMouseMove, onMouseDown: handleMouseDown, onMouseUp: handleMouseUp },
