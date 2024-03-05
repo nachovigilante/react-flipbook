@@ -41,21 +41,21 @@ export function FlippingPageLeft({
     useEffect(() => {
         setRightClipPath(
             `polygon(
-                ${pageSize.width - topFoldedLength}px ${
-                pageSize.height - foldedHeight
+                ${pageSize.width - topFoldedLength + 1}px ${
+                pageSize.height - foldedHeight + 2
             }px,
-                ${pageSize.width}px 0px,
-                ${pageSize.width}px ${pageSize.height}px,
-                ${pageSize.width - foldedLength}px ${pageSize.height}px
+                ${pageSize.width + 1}px ${pageSize.height - foldedHeight + 2}px,
+                ${pageSize.width + 1}px ${pageSize.height + 2}px,
+                ${pageSize.width - foldedLength + 1}px ${pageSize.height + 2}px
             )`
         );
         setLeftClipPath(
             `polygon(
                 ${topFoldedLength}px 0px,
-                ${pageSize.width}px 0px,
-                ${pageSize.width}px ${pageSize.height}px,
-                ${foldedLength}px ${pageSize.height}px,
-                ${topFoldedLength}px ${pageSize.height - foldedHeight}px
+                ${pageSize.width + 1}px 0px,
+                ${pageSize.width + 1}px ${pageSize.height + 2}px,
+                ${foldedLength}px ${pageSize.height + 2}px,
+                ${topFoldedLength}px ${pageSize.height - foldedHeight + 2}px
             )`
         );
     }, [

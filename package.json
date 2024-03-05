@@ -1,38 +1,52 @@
 {
-    "name": "react-flipbook-nv",
-    "version": "1.0.2",
-    "description": "A simple flipbook component for React",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "scripts": {
-        "format": "prettier --write src/**/*",
-        "build": "npm run format && npm run build:esm && npm run build:cjs",
-        "build:esm": "tsc",
-        "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
-    },
-    "keywords": [
-        "react",
-        "flipbook",
-        "animation",
-        "component",
-        "book"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/nachovigilante/react-flipbook.git"
-    },
-    "author": "Ignacio Vigilante",
-    "bugs": {
-        "url": "https://github.com/nachovigilante/react-flipbook/issues"
-    },
-    "homepage": "https://github.com/nachovigilante/react-flipbook#readme",
-    "license": "MIT",
-    "devDependencies": {
-        "@types/node": "^20.11.24",
-        "@types/react": "^18.2.61",
-        "@types/react-dom": "^18.2.19",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "typescript": "^5.3.3"
-    }
+  "name": "react-flipbook-nv",
+  "version": "1.0.2",
+  "description": "A simple flipbook component for React",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "format": "prettier --write src/**/*",
+    "build": "npm run format && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [
+    "react",
+    "flipbook",
+    "animation",
+    "component",
+    "book"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nachovigilante/react-flipbook.git"
+  },
+  "author": "Ignacio Vigilante",
+  "bugs": {
+    "url": "https://github.com/nachovigilante/react-flipbook/issues"
+  },
+  "homepage": "https://github.com/nachovigilante/react-flipbook#readme",
+  "license": "MIT",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.17",
+    "@storybook/addon-interactions": "^7.6.17",
+    "@storybook/addon-links": "^7.6.17",
+    "@storybook/addon-onboarding": "1.0.11",
+    "@storybook/blocks": "^7.6.17",
+    "@storybook/react": "^7.6.17",
+    "@storybook/react-webpack5": "^7.6.17",
+    "@storybook/test": "^7.6.17",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18.2.61",
+    "@types/react-dom": "^18.2.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.17",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "framer-motion": "^11.0.8"
+  }
 }
