@@ -24,6 +24,7 @@ export function Flipbook({
 }) {
     const bookRef = createRef<HTMLDivElement>();
     const DELTA = 0.00001;
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const {
         value: leftDragX,
@@ -124,7 +125,7 @@ export function Flipbook({
     };
 
     const handleMouseMove: MouseEventHandler<HTMLDivElement> = (e) => {
-        if (isFlipping || !bookRef.current) return;
+        if (isFlipping || !bookRef.current || isAnimating) return;
 
         const { x, y } = bookRef.current!.getBoundingClientRect();
         const realX = e.clientX - x;
@@ -135,6 +136,10 @@ export function Flipbook({
                 interpolateLeftDragX(pageSize.width / 10);
                 interpolateLeftDragY(pageSize.height - pageSize.width / 16);
                 bookRef.current.style.cursor = 'grab';
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             } else if (
                 realX > pageSize.width * 2 - pageSize.width / 8 &&
                 realY < pageSize.height / 8
@@ -142,8 +147,16 @@ export function Flipbook({
                 interpolateRightDragX(pageSize.width * 2 - pageSize.width / 10);
                 interpolateRightDragY(pageSize.height - pageSize.width / 16);
                 bookRef.current.style.cursor = 'grab';
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             } else {
                 reset();
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             }
         } else {
             if (e.buttons !== 1) {
@@ -164,7 +177,7 @@ export function Flipbook({
     };
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-        if (isFlipping || !bookRef.current) return;
+        if (isFlipping || !bookRef.current || isAnimating) return;
         const { x, y } = bookRef.current!.getBoundingClientRect();
         const realX = e.clientX - x;
         const realY = pageSize.height - (e.clientY - y);

@@ -53,7 +53,7 @@ export function FlippingPageRight({
         setLeftClipPath(
             `polygon(
                 0px ${pageSize.height + 2}px,
-                0px 0px,
+                0px ${pageSize.height + 2 - foldedHeight}px,
                 ${topFoldedLength}px ${pageSize.height + 2 - foldedHeight}px,
                 ${foldedLength}px ${pageSize.height + 2}px,
                 ${foldedLength}px ${pageSize.height + 2}px
