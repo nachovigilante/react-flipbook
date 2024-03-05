@@ -79,15 +79,15 @@ export function Flipbook({
                     setIsFlipping(false);
                     immediateReset();
                 },
-                duration: 800,
+                duration: 500,
             });
-            interpolateLeftDragY(pageSize.height - pageSize.height / 6, {
+            interpolateLeftDragY(pageSize.height - pageSize.height / 8, {
                 onDone: () => {
                     interpolateLeftDragY(pageSize.height - DELTA, {
-                        duration: 300,
+                        duration: 200,
                     });
                 },
-                duration: 300,
+                duration: 100,
             });
         } else {
             interpolateRightDragX(DELTA, {
@@ -96,15 +96,15 @@ export function Flipbook({
                     setIsFlipping(false);
                     immediateReset();
                 },
-                duration: 800,
+                duration: 500,
             });
-            interpolateRightDragY(pageSize.height - pageSize.height / 6, {
+            interpolateRightDragY(pageSize.height - pageSize.height / 8, {
                 onDone: () => {
                     interpolateRightDragY(pageSize.height - DELTA, {
-                        duration: 300,
+                        duration: 200,
                     });
                 },
-                duration: 300,
+                duration: 100,
             });
         }
     };
@@ -177,7 +177,7 @@ export function Flipbook({
     };
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-        if (isFlipping || !bookRef.current || isAnimating) return;
+        if (isFlipping || !bookRef.current ) return;
         const { x, y } = bookRef.current!.getBoundingClientRect();
         const realX = e.clientX - x;
         const realY = pageSize.height - (e.clientY - y);

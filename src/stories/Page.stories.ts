@@ -15,8 +15,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const LoggedIn: Story = {
-    play: async ({ canvasElement }) => {
-        
-    },
-};
+export const LoggedIn: Story = {};
