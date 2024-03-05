@@ -47,14 +47,14 @@ function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, rightPage
     (0, react_1.useEffect)(() => {
         setRightClipPath(`polygon(
                 0px 0px,
-                ${pageSize.width - topFoldedLength}px 0px,
-                ${pageSize.width - topFoldedLength}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width - topFoldedLength + 1}px 0px,
+                ${pageSize.width - topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
                 ${pageSize.width - foldedLength}px ${pageSize.height}px,
                 0px ${pageSize.height}px
             )`);
         setLeftClipPath(`polygon(
                 0px ${pageSize.height}px,
-                0px 0px,
+                0px ${pageSize.height - foldedHeight}px,
                 ${topFoldedLength}px ${pageSize.height - foldedHeight}px,
                 ${foldedLength}px ${pageSize.height}px,
                 ${foldedLength}px ${pageSize.height}px

@@ -20,17 +20,17 @@ export function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rig
     }, [dragX, dragY, pageSize.width, pageSize.height]);
     useEffect(() => {
         setRightClipPath(`polygon(
-                ${pageSize.width - topFoldedLength}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width}px 0px,
-                ${pageSize.width}px ${pageSize.height}px,
-                ${pageSize.width - foldedLength}px ${pageSize.height}px
+                ${pageSize.width - topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width + 1}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width + 1}px ${pageSize.height}px,
+                ${pageSize.width - foldedLength + 1}px ${pageSize.height}px
             )`);
         setLeftClipPath(`polygon(
-                ${topFoldedLength}px 0px,
-                ${pageSize.width}px 0px,
-                ${pageSize.width}px ${pageSize.height}px,
-                ${foldedLength}px ${pageSize.height}px,
-                ${topFoldedLength}px ${pageSize.height - foldedHeight}px
+                ${topFoldedLength + 1}px 0px,
+                ${pageSize.width + 1}px 0px,
+                ${pageSize.width + 1}px ${pageSize.height}px,
+                ${foldedLength + 1}px ${pageSize.height}px,
+                ${topFoldedLength + 1}px ${pageSize.height - foldedHeight}px
             )`);
     }, [
         topFoldedLength,

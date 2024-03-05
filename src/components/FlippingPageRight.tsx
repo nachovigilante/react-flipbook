@@ -42,21 +42,21 @@ export function FlippingPageRight({
         setRightClipPath(
             `polygon(
                 0px 0px,
-                ${pageSize.width - topFoldedLength}px 0px,
-                ${pageSize.width - topFoldedLength}px ${
-                pageSize.height + 2 - foldedHeight
+                ${pageSize.width - topFoldedLength + 1}px 0px,
+                ${pageSize.width - topFoldedLength + 1}px ${
+                pageSize.height - foldedHeight
             }px,
-                ${pageSize.width - foldedLength}px ${pageSize.height + 2}px,
-                0px ${pageSize.height + 2}px
+                ${pageSize.width - foldedLength}px ${pageSize.height}px,
+                0px ${pageSize.height}px
             )`
         );
         setLeftClipPath(
             `polygon(
-                0px ${pageSize.height + 2}px,
-                0px ${pageSize.height + 2 - foldedHeight}px,
-                ${topFoldedLength}px ${pageSize.height + 2 - foldedHeight}px,
-                ${foldedLength}px ${pageSize.height + 2}px,
-                ${foldedLength}px ${pageSize.height + 2}px
+                0px ${pageSize.height}px,
+                0px ${pageSize.height - foldedHeight}px,
+                ${topFoldedLength}px ${pageSize.height - foldedHeight}px,
+                ${foldedLength}px ${pageSize.height}px,
+                ${foldedLength}px ${pageSize.height}px
             )`
         );
     }, [

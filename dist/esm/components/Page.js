@@ -18,7 +18,6 @@ export function Page({ children, width, height, side, angle, clipPath, marginLef
             transformOrigin: transformOrigin,
             zIndex: zIndex || 0,
             boxShadow: `inset ${side === 'left' ? '-' : ''}5px 0px 35px 0 rgb(36 10 3 / 50%)`,
-            border: '1px solid black',
             visibility: invisible ? 'hidden' : 'visible',
         }, "data-interactive": interactive }, children));
 }

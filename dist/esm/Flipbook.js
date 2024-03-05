@@ -13,6 +13,7 @@ export var PageDirection;
 export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
     const bookRef = createRef();
     const DELTA = 0.00001;
+    const [isAnimating, setIsAnimating] = useState(false);
     const { value: leftDragX, start: interpolateLeftDragX, immediateTo: setLeftDragX, } = useTransitionValue(DELTA);
     const { value: leftDragY, start: interpolateLeftDragY, immediateTo: setLeftDragY, } = useTransitionValue(pageSize.height - DELTA);
     const { value: rightDragX, start: interpolateRightDragX, immediateTo: setRightDragX, } = useTransitionValue(pageSize.width * 2 - DELTA);
@@ -35,15 +36,15 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
                     setIsFlipping(false);
                     immediateReset();
                 },
-                duration: 800,
+                duration: 500,
             });
-            interpolateLeftDragY(pageSize.height - pageSize.height / 6, {
+            interpolateLeftDragY(pageSize.height - pageSize.height / 8, {
                 onDone: () => {
                     interpolateLeftDragY(pageSize.height - DELTA, {
-                        duration: 300,
+                        duration: 200,
                     });
                 },
-                duration: 300,
+                duration: 100,
             });
         }
         else {
@@ -53,15 +54,15 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
                     setIsFlipping(false);
                     immediateReset();
                 },
-                duration: 800,
+                duration: 500,
             });
-            interpolateRightDragY(pageSize.height - pageSize.height / 6, {
+            interpolateRightDragY(pageSize.height - pageSize.height / 8, {
                 onDone: () => {
                     interpolateRightDragY(pageSize.height - DELTA, {
-                        duration: 300,
+                        duration: 200,
                     });
                 },
-                duration: 300,
+                duration: 100,
             });
         }
     };
@@ -79,7 +80,7 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
         setRightDragY(pageSize.height - DELTA);
     };
     const handleMouseMove = (e) => {
-        if (isFlipping || !bookRef.current)
+        if (isFlipping || !bookRef.current || isAnimating)
             return;
         const { x, y } = bookRef.current.getBoundingClientRect();
         const realX = e.clientX - x;
@@ -89,15 +90,27 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
                 interpolateLeftDragX(pageSize.width / 10);
                 interpolateLeftDragY(pageSize.height - pageSize.width / 16);
                 bookRef.current.style.cursor = 'grab';
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             }
             else if (realX > pageSize.width * 2 - pageSize.width / 8 &&
                 realY < pageSize.height / 8) {
                 interpolateRightDragX(pageSize.width * 2 - pageSize.width / 10);
                 interpolateRightDragY(pageSize.height - pageSize.width / 16);
                 bookRef.current.style.cursor = 'grab';
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             }
             else {
                 reset();
+                setIsAnimating(true);
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 100);
             }
         }
         else {

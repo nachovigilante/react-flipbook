@@ -177,7 +177,7 @@ export function Flipbook({
     };
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-        if (isFlipping || !bookRef.current ) return;
+        if (isFlipping || !bookRef.current) return;
         const { x, y } = bookRef.current!.getBoundingClientRect();
         const realX = e.clientX - x;
         const realY = pageSize.height - (e.clientY - y);
