@@ -39,7 +39,7 @@ var PageDirection;
     PageDirection[PageDirection["LEFT"] = 0] = "LEFT";
     PageDirection[PageDirection["RIGHT"] = 1] = "RIGHT";
 })(PageDirection || (exports.PageDirection = PageDirection = {}));
-function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
+function Flipbook({ pageSize, pages, controls, controlsClassName, onPageChange, }) {
     const bookRef = (0, react_1.createRef)();
     const DELTA = 0.00001;
     const [isAnimating, setIsAnimating] = (0, react_1.useState)(false);
@@ -49,7 +49,7 @@ function Flipbook({ pageSize, pages, controls, controlsClassName, }) {
     const { value: rightDragY, start: interpolateRightDragY, immediateTo: setRightDragY, } = (0, useTransitionValue_1.default)(pageSize.height - DELTA);
     const [isFlipping, setIsFlipping] = (0, react_1.useState)(false);
     const [draggingSide, setDraggingSide] = (0, react_1.useState)(null);
-    const { pageWindowStart, incrementWindow, decrementWindow } = (0, usePageWindow_1.default)(pages.length + 2);
+    const { pageWindowStart, incrementWindow, decrementWindow } = (0, usePageWindow_1.default)(pages.length + 2, onPageChange);
     const paddedPages = [
         react_1.default.createElement("div", { key: "padding-left", style: { width: pageSize.width, height: pageSize.height } }),
         ...pages,

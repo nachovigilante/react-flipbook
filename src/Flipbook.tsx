@@ -16,11 +16,13 @@ export function Flipbook({
     pages,
     controls,
     controlsClassName,
+    onPageChange,
 }: {
     pageSize: { width: number; height: number };
     pages: React.ReactNode[];
     controls?: boolean;
     controlsClassName?: string;
+    onPageChange?: (pageWindowStart: number) => void;
 }) {
     const bookRef = createRef<HTMLDivElement>();
     const DELTA = 0.00001;
@@ -53,7 +55,8 @@ export function Flipbook({
     );
 
     const { pageWindowStart, incrementWindow, decrementWindow } = usePageWindow(
-        pages.length + 2
+        pages.length + 2,
+        onPageChange
     );
 
     const paddedPages = [

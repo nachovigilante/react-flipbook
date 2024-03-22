@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, expect } from '@storybook/test';
 
 import { Page } from './Page';
 
@@ -15,4 +14,4 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const LoggedIn: Story = {};
+export const Standard: Story = {};

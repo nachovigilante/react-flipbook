@@ -3,7 +3,7 @@ export declare enum PageDirection {
     LEFT = 0,
     RIGHT = 1
 }
-export declare function Flipbook({ pageSize, pages, controls, controlsClassName, }: {
+export declare function Flipbook({ pageSize, pages, controls, controlsClassName, onPageChange, }: {
     pageSize: {
         width: number;
         height: number;
@@ -11,4 +11,5 @@ export declare function Flipbook({ pageSize, pages, controls, controlsClassName,
     pages: React.ReactNode[];
     controls?: boolean;
     controlsClassName?: string;
+    onPageChange?: (pageWindowStart: number) => void;
 }): React.JSX.Element;

@@ -17,7 +17,13 @@ export const Page: React.FC = () => {
 
     return (
         <div className="container">
-            <Flipbook pageSize={pageSize} pages={pages} />
+            <Flipbook
+                pageSize={pageSize}
+                pages={pages}
+                onPageChange={(pageWindowStart: number) =>
+                    console.log(pageWindowStart)
+                }
+            />
         </div>
     );
 };
