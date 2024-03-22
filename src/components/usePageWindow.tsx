@@ -17,7 +17,7 @@ export default function usePageWindow(
                 return state + 2;
             } else {
                 if (state === -2) return state;
-                onPageChange && onPageChange(state + 2);
+                onPageChange && onPageChange(state - 2);
                 return state - 2;
             }
         },
