@@ -10,7 +10,6 @@ type PageProps = {
     transformOrigin?: string;
     zIndex?: number;
     invisible?: boolean;
-    interactive?: boolean;
 };
-export declare function Page({ children, width, height, side, angle, clipPath, marginLeft, transformOrigin, zIndex, invisible, interactive, }: PageProps): React.JSX.Element;
+export declare function Page({ children, width, height, side, angle, clipPath, marginLeft, transformOrigin, zIndex, invisible, }: PageProps): React.JSX.Element;
 export {};

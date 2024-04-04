@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 
 export default function usePageWindow(
     pageCount: number,
-    onPageChange?: (pageWindowStart: number) => void
+    onPageChange: (pageWindowStart: number) => void
 ) {
     const [pageWindowStart, dispatch] = useReducer(
         (
@@ -13,11 +13,11 @@ export default function usePageWindow(
         ) => {
             if (action.type === 'INCREMENT') {
                 if (state >= pageCount - 4) return state;
-                onPageChange && onPageChange(state + 2);
+                onPageChange(state + 2);
                 return state + 2;
             } else {
                 if (state === -2) return state;
-                onPageChange && onPageChange(state - 2);
+                onPageChange(state - 2);
                 return state - 2;
             }
         },

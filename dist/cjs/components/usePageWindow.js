@@ -6,13 +6,13 @@ function usePageWindow(pageCount, onPageChange) {
         if (action.type === 'INCREMENT') {
             if (state >= pageCount - 4)
                 return state;
-            onPageChange && onPageChange(state + 2);
+            onPageChange(state + 2);
             return state + 2;
         }
         else {
             if (state === -2)
                 return state;
-            onPageChange && onPageChange(state + 2);
+            onPageChange(state - 2);
             return state - 2;
         }
     }, 0);

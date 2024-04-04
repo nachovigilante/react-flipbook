@@ -20,17 +20,17 @@ export function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rig
     }, [dragX, dragY, pageSize.width, pageSize.height]);
     useEffect(() => {
         setRightClipPath(`polygon(
-                ${pageSize.width - topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width + 1}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width + 1}px ${pageSize.height}px,
-                ${pageSize.width - foldedLength + 1}px ${pageSize.height}px
+                ${pageSize.width - topFoldedLength}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width}px ${pageSize.height}px,
+                ${pageSize.width - foldedLength}px ${pageSize.height}px
             )`);
         setLeftClipPath(`polygon(
-                ${topFoldedLength + 1}px 0px,
+                ${topFoldedLength}px 0px,
                 ${pageSize.width + 1}px 0px,
-                ${pageSize.width + 1}px ${pageSize.height}px,
-                ${foldedLength + 1}px ${pageSize.height}px,
-                ${topFoldedLength + 1}px ${pageSize.height - foldedHeight}px
+                ${pageSize.width + 1}px ${pageSize.height + 1}px,
+                ${foldedLength + 1}px ${pageSize.height + 1}px,
+                ${topFoldedLength}px ${pageSize.height - foldedHeight}px
             )`);
     }, [
         topFoldedLength,
@@ -40,7 +40,7 @@ export function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rig
         foldedLength,
     ]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible, interactive: true }), leftPageChildren),
+        React.createElement(Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible }), leftPageChildren),
         React.createElement("div", { style: {
                 position: 'absolute',
                 zIndex: 50,

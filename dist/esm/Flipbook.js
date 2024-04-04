@@ -3,7 +3,6 @@ import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
 import usePageWindow from './components/usePageWindow';
-// import { useInterpolatingValue } from './components/useInterpolatingValue';
 import useTransitionValue from './components/useTransitionValue';
 export var PageDirection;
 (function (PageDirection) {
@@ -14,13 +13,24 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, onPageC
     const bookRef = createRef();
     const DELTA = 0.00001;
     const [isAnimating, setIsAnimating] = useState(false);
+    // TODO: Use status to determine the transform of the book
+    const [_, setStatus] = useState('cover');
     const { value: leftDragX, start: interpolateLeftDragX, immediateTo: setLeftDragX, } = useTransitionValue(DELTA);
     const { value: leftDragY, start: interpolateLeftDragY, immediateTo: setLeftDragY, } = useTransitionValue(pageSize.height - DELTA);
     const { value: rightDragX, start: interpolateRightDragX, immediateTo: setRightDragX, } = useTransitionValue(pageSize.width * 2 - DELTA);
     const { value: rightDragY, start: interpolateRightDragY, immediateTo: setRightDragY, } = useTransitionValue(pageSize.height - DELTA);
     const [isFlipping, setIsFlipping] = useState(false);
     const [draggingSide, setDraggingSide] = useState(null);
-    const { pageWindowStart, incrementWindow, decrementWindow } = usePageWindow(pages.length + 2, onPageChange);
+    const { pageWindowStart, incrementWindow, decrementWindow } = usePageWindow(pages.length + 2, (pageWindowStart) => {
+        if (pageWindowStart === -2 ||
+            pageWindowStart === pages.length - 2) {
+            setStatus(pageWindowStart === -2 ? 'cover' : 'back');
+        }
+        else {
+            setStatus('center');
+        }
+        onPageChange && onPageChange(pageWindowStart);
+    });
     const paddedPages = [
         React.createElement("div", { key: "padding-left", style: { width: pageSize.width, height: pageSize.height } }),
         ...pages,
@@ -178,6 +188,13 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, onPageC
         React.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,
+                // transform:
+                //     status === 'cover'
+                //         ? `translateX(-${pageSize.width / 2}px)`
+                //         : status === 'back'
+                //         ? `translateX(${pageSize.width / 2}px)`
+                //         : 'none',
+                // transition: 'transform 0.3s',
             }, ref: bookRef, onMouseMove: handleMouseMove, onMouseDown: handleMouseDown, onMouseUp: handleMouseUp },
             React.createElement(Page, Object.assign({}, pageSize, { side: "left", invisible: pageWindowStart <= 0 }), paddedPages[pageWindowStart]),
             React.createElement(FlippingPageLeft, { pageSize: pageSize, dragX: leftDragX, dragY: leftDragY, rightPageChildren: paddedPages[pageWindowStart + 1], leftPageChildren: paddedPages[pageWindowStart + 2], invisible: pageWindowStart <= -2 }),

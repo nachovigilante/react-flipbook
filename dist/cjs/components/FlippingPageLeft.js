@@ -46,17 +46,17 @@ function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rightPageC
     }, [dragX, dragY, pageSize.width, pageSize.height]);
     (0, react_1.useEffect)(() => {
         setRightClipPath(`polygon(
-                ${pageSize.width - topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width + 1}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width + 1}px ${pageSize.height}px,
-                ${pageSize.width - foldedLength + 1}px ${pageSize.height}px
+                ${pageSize.width - topFoldedLength}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width}px ${pageSize.height - foldedHeight}px,
+                ${pageSize.width}px ${pageSize.height}px,
+                ${pageSize.width - foldedLength}px ${pageSize.height}px
             )`);
         setLeftClipPath(`polygon(
-                ${topFoldedLength + 1}px 0px,
+                ${topFoldedLength}px 0px,
                 ${pageSize.width + 1}px 0px,
-                ${pageSize.width + 1}px ${pageSize.height}px,
-                ${foldedLength + 1}px ${pageSize.height}px,
-                ${topFoldedLength + 1}px ${pageSize.height - foldedHeight}px
+                ${pageSize.width + 1}px ${pageSize.height + 1}px,
+                ${foldedLength + 1}px ${pageSize.height + 1}px,
+                ${topFoldedLength}px ${pageSize.height - foldedHeight}px
             )`);
     }, [
         topFoldedLength,
@@ -66,7 +66,7 @@ function FlippingPageLeft({ pageSize, dragX, dragY, leftPageChildren, rightPageC
         foldedLength,
     ]);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(Page_1.Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible, interactive: true }), leftPageChildren),
+        react_1.default.createElement(Page_1.Page, Object.assign({}, pageSize, { side: "left", clipPath: leftClipPath, zIndex: 1, invisible: invisible }), leftPageChildren),
         react_1.default.createElement("div", { style: {
                 position: 'absolute',
                 zIndex: 50,

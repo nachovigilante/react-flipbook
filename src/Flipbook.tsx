@@ -3,7 +3,6 @@ import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
 import usePageWindow from './components/usePageWindow';
-// import { useInterpolatingValue } from './components/useInterpolatingValue';
 import useTransitionValue from './components/useTransitionValue';
 
 export enum PageDirection {
@@ -27,6 +26,8 @@ export function Flipbook({
     const bookRef = createRef<HTMLDivElement>();
     const DELTA = 0.00001;
     const [isAnimating, setIsAnimating] = useState(false);
+    // TODO: Use status to determine the transform of the book
+    const [_, setStatus] = useState<'cover' | 'center' | 'back'>('cover');
 
     const {
         value: leftDragX,
@@ -56,7 +57,17 @@ export function Flipbook({
 
     const { pageWindowStart, incrementWindow, decrementWindow } = usePageWindow(
         pages.length + 2,
-        onPageChange
+        (pageWindowStart: number) => {
+            if (
+                pageWindowStart === -2 ||
+                pageWindowStart === pages.length - 2
+            ) {
+                setStatus(pageWindowStart === -2 ? 'cover' : 'back');
+            } else {
+                setStatus('center');
+            }
+            onPageChange && onPageChange(pageWindowStart);
+        }
     );
 
     const paddedPages = [
@@ -250,6 +261,13 @@ export function Flipbook({
                 style={{
                     width: pageSize.width * 2,
                     height: pageSize.height,
+                    // transform:
+                    //     status === 'cover'
+                    //         ? `translateX(-${pageSize.width / 2}px)`
+                    //         : status === 'back'
+                    //         ? `translateX(${pageSize.width / 2}px)`
+                    //         : 'none',
+                    // transition: 'transform 0.3s',
                 }}
                 ref={bookRef}
                 onMouseMove={handleMouseMove}

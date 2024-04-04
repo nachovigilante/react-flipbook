@@ -23,14 +23,14 @@ export function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, ri
                 0px 0px,
                 ${pageSize.width - topFoldedLength + 1}px 0px,
                 ${pageSize.width - topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
-                ${pageSize.width - foldedLength}px ${pageSize.height}px,
-                0px ${pageSize.height}px
+                ${pageSize.width - foldedLength}px ${pageSize.height + 1}px,
+                0px ${pageSize.height + 1}px
             )`);
         setLeftClipPath(`polygon(
                 0px ${pageSize.height}px,
-                0px ${pageSize.height - foldedHeight}px,
-                ${topFoldedLength}px ${pageSize.height - foldedHeight}px,
-                ${foldedLength}px ${pageSize.height}px,
+                0px ${pageSize.height - foldedHeight + 1}px,
+                ${topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
+                ${foldedLength + 0.5}px ${pageSize.height}px,
                 ${foldedLength}px ${pageSize.height}px
             )`);
     }, [
@@ -41,7 +41,7 @@ export function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, ri
         foldedLength,
     ]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(Page, Object.assign({}, pageSize, { side: "right", clipPath: rightClipPath, zIndex: 1, invisible: invisible, interactive: true }), rightPageChildren),
+        React.createElement(Page, Object.assign({}, pageSize, { side: "right", clipPath: rightClipPath, zIndex: 1, invisible: invisible }), rightPageChildren),
         React.createElement("div", { className: "drop-shadow-2xl", style: {
                 position: 'absolute',
                 zIndex: 50,

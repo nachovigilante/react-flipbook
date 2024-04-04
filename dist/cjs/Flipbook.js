@@ -32,7 +32,6 @@ const Page_1 = require("./components/Page");
 const FlippingPageRight_1 = require("./components/FlippingPageRight");
 const FlippingPageLeft_1 = require("./components/FlippingPageLeft");
 const usePageWindow_1 = __importDefault(require("./components/usePageWindow"));
-// import { useInterpolatingValue } from './components/useInterpolatingValue';
 const useTransitionValue_1 = __importDefault(require("./components/useTransitionValue"));
 var PageDirection;
 (function (PageDirection) {
@@ -43,13 +42,24 @@ function Flipbook({ pageSize, pages, controls, controlsClassName, onPageChange, 
     const bookRef = (0, react_1.createRef)();
     const DELTA = 0.00001;
     const [isAnimating, setIsAnimating] = (0, react_1.useState)(false);
+    // TODO: Use status to determine the transform of the book
+    const [_, setStatus] = (0, react_1.useState)('cover');
     const { value: leftDragX, start: interpolateLeftDragX, immediateTo: setLeftDragX, } = (0, useTransitionValue_1.default)(DELTA);
     const { value: leftDragY, start: interpolateLeftDragY, immediateTo: setLeftDragY, } = (0, useTransitionValue_1.default)(pageSize.height - DELTA);
     const { value: rightDragX, start: interpolateRightDragX, immediateTo: setRightDragX, } = (0, useTransitionValue_1.default)(pageSize.width * 2 - DELTA);
     const { value: rightDragY, start: interpolateRightDragY, immediateTo: setRightDragY, } = (0, useTransitionValue_1.default)(pageSize.height - DELTA);
     const [isFlipping, setIsFlipping] = (0, react_1.useState)(false);
     const [draggingSide, setDraggingSide] = (0, react_1.useState)(null);
-    const { pageWindowStart, incrementWindow, decrementWindow } = (0, usePageWindow_1.default)(pages.length + 2, onPageChange);
+    const { pageWindowStart, incrementWindow, decrementWindow } = (0, usePageWindow_1.default)(pages.length + 2, (pageWindowStart) => {
+        if (pageWindowStart === -2 ||
+            pageWindowStart === pages.length - 2) {
+            setStatus(pageWindowStart === -2 ? 'cover' : 'back');
+        }
+        else {
+            setStatus('center');
+        }
+        onPageChange && onPageChange(pageWindowStart);
+    });
     const paddedPages = [
         react_1.default.createElement("div", { key: "padding-left", style: { width: pageSize.width, height: pageSize.height } }),
         ...pages,
@@ -207,6 +217,13 @@ function Flipbook({ pageSize, pages, controls, controlsClassName, onPageChange, 
         react_1.default.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,
+                // transform:
+                //     status === 'cover'
+                //         ? `translateX(-${pageSize.width / 2}px)`
+                //         : status === 'back'
+                //         ? `translateX(${pageSize.width / 2}px)`
+                //         : 'none',
+                // transition: 'transform 0.3s',
             }, ref: bookRef, onMouseMove: handleMouseMove, onMouseDown: handleMouseDown, onMouseUp: handleMouseUp },
             react_1.default.createElement(Page_1.Page, Object.assign({}, pageSize, { side: "left", invisible: pageWindowStart <= 0 }), paddedPages[pageWindowStart]),
             react_1.default.createElement(FlippingPageLeft_1.FlippingPageLeft, { pageSize: pageSize, dragX: leftDragX, dragY: leftDragY, rightPageChildren: paddedPages[pageWindowStart + 1], leftPageChildren: paddedPages[pageWindowStart + 2], invisible: pageWindowStart <= -2 }),

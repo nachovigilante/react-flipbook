@@ -53,9 +53,9 @@ export function FlippingPageRight({
         setLeftClipPath(
             `polygon(
                 0px ${pageSize.height}px,
-                0px ${pageSize.height - foldedHeight}px,
-                ${topFoldedLength}px ${pageSize.height - foldedHeight}px,
-                ${foldedLength}px ${pageSize.height}px,
+                0px ${pageSize.height - foldedHeight + 1}px,
+                ${topFoldedLength + 1}px ${pageSize.height - foldedHeight}px,
+                ${foldedLength + 0.5}px ${pageSize.height}px,
                 ${foldedLength}px ${pageSize.height}px
             )`
         );
@@ -75,7 +75,6 @@ export function FlippingPageRight({
                 clipPath={rightClipPath}
                 zIndex={1}
                 invisible={invisible}
-                interactive
             >
                 {rightPageChildren}
             </Page>
