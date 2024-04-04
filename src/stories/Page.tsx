@@ -10,7 +10,13 @@ export const Page: React.FC = () => {
     };
 
     const pages = Array.from({ length: 10 }, (_, i) => (
-        <h1 key={i} className="page">
+        <h1
+            key={i}
+            className="page"
+            style={{
+                backgroundColor: `hsl(${i * 36}, 100%, 50%)`,
+            }}
+        >
             {i + 1}
         </h1>
     ));

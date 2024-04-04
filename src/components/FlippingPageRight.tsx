@@ -46,8 +46,8 @@ export function FlippingPageRight({
                 ${pageSize.width - topFoldedLength + 1}px ${
                 pageSize.height - foldedHeight
             }px,
-                ${pageSize.width - foldedLength}px ${pageSize.height}px,
-                0px ${pageSize.height}px
+                ${pageSize.width - foldedLength}px ${pageSize.height + 1}px,
+                0px ${pageSize.height + 1}px
             )`
         );
         setLeftClipPath(
