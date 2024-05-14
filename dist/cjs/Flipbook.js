@@ -39,7 +39,7 @@ var PageDirection;
     PageDirection[PageDirection["LEFT"] = 0] = "LEFT";
     PageDirection[PageDirection["RIGHT"] = 1] = "RIGHT";
 })(PageDirection || (exports.PageDirection = PageDirection = {}));
-function Flipbook({ pageSize, pages, controls, controlsClassName, buttonClassName, pagesClassName, ellipsisClassName, onPageChange, }) {
+function Flipbook({ pageSize, pages, controls, controlsPageNumbers, controlsClassName, buttonClassName, pagesClassName, ellipsisClassName, onPageChange, }) {
     const bookRef = (0, react_1.createRef)();
     const DELTA = 0.00001;
     const [isAnimating, setIsAnimating] = (0, react_1.useState)(false);
@@ -214,7 +214,7 @@ function Flipbook({ pageSize, pages, controls, controlsClassName, buttonClassNam
     const [xTranslationLeft, setXTranslationLeft] = (0, react_1.useState)(0);
     const [xTranslationRight, setXTranslationRight] = (0, react_1.useState)(0);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        controls && (react_1.default.createElement(Controls_1.Controls, { controlsClassName: controlsClassName, buttonClassName: buttonClassName, pagesClassName: pagesClassName, ellipsisClassName: ellipsisClassName, flip: flip, flipTo: flipTo, pageWindowStart: pageWindowStart, isFlipping: isFlipping, pages: pages })),
+        controls && (react_1.default.createElement(Controls_1.Controls, { controlsPageNumbers: controlsPageNumbers || false, controlsClassName: controlsClassName, buttonClassName: buttonClassName, pagesClassName: pagesClassName, ellipsisClassName: ellipsisClassName, flip: flip, flipTo: flipTo, pageWindowStart: pageWindowStart, isFlipping: isFlipping, pages: pages })),
         react_1.default.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,

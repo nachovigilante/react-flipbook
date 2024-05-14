@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageDirection } from '../Flipbook';
-export function Controls({ controlsClassName, buttonClassName, pagesClassName, ellipsisClassName, flip, flipTo, pageWindowStart, isFlipping, pages, }) {
+export function Controls({ controlsPageNumbers, controlsClassName, buttonClassName, pagesClassName, ellipsisClassName, flip, flipTo, pageWindowStart, isFlipping, pages, }) {
     return (React.createElement("div", { className: controlsClassName, style: controlsClassName
             ? {}
             : {
@@ -10,8 +10,8 @@ export function Controls({ controlsClassName, buttonClassName, pagesClassName, e
                 display: 'flex',
                 gap: '8px',
             } },
-        React.createElement("button", { onClick: () => flip(PageDirection.LEFT), disabled: pageWindowStart <= -2 || isFlipping, className: buttonClassName }, `<-`),
-        React.createElement("div", { className: pagesClassName },
+        React.createElement("button", { onClick: () => flip(PageDirection.LEFT), disabled: pageWindowStart <= -2 || isFlipping, className: buttonClassName }, !buttonClassName && `<-`),
+        controlsPageNumbers && (React.createElement("div", { className: pagesClassName },
             pageWindowStart > 0 && (React.createElement("p", { className: ellipsisClassName }, "...")),
             pages
                 .map((_, i) => i)
@@ -24,7 +24,7 @@ export function Controls({ controlsClassName, buttonClassName, pagesClassName, e
                     i + 1 <= pageWindowStart + 4);
             })
                 .map((i) => (React.createElement("button", { key: i, onClick: () => flipTo(i + 1), disabled: isFlipping }, i + 1))),
-            pageWindowStart <= pages.length - 5 && (React.createElement("p", { className: ellipsisClassName }, "..."))),
-        React.createElement("button", { onClick: () => flip(PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping, className: buttonClassName }, `->`)));
+            pageWindowStart <= pages.length - 5 && (React.createElement("p", { className: ellipsisClassName }, "...")))),
+        React.createElement("button", { onClick: () => flip(PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping, className: buttonClassName + 'transform rotate-180' }, !buttonClassName && `->`)));
 }
 //# sourceMappingURL=Controls.js.map

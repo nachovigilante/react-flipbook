@@ -15,6 +15,7 @@ export function Flipbook({
     pageSize,
     pages,
     controls,
+    controlsPageNumbers,
     controlsClassName,
     buttonClassName,
     pagesClassName,
@@ -24,6 +25,7 @@ export function Flipbook({
     pageSize: { width: number; height: number };
     pages: React.ReactNode[];
     controls?: boolean;
+    controlsPageNumbers?: boolean;
     controlsClassName?: string;
     buttonClassName?: string;
     pagesClassName?: string;
@@ -257,6 +259,7 @@ export function Flipbook({
         <>
             {controls && (
                 <Controls
+                    controlsPageNumbers={controlsPageNumbers || false}
                     controlsClassName={controlsClassName}
                     buttonClassName={buttonClassName}
                     pagesClassName={pagesClassName}
