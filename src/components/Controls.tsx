@@ -79,7 +79,7 @@ export function Controls({
             <button
                 onClick={() => flip(PageDirection.RIGHT)}
                 disabled={pageWindowStart >= pages.length - 2 || isFlipping}
-                className={buttonClassName + 'transform rotate-180'}
+                className={buttonClassName + ' transform rotate-180'}
             >
                 {!buttonClassName && `->`}
             </button>

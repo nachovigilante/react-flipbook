@@ -31,7 +31,7 @@ function Controls({ controlsPageNumbers, controlsClassName, buttonClassName, pag
             })
                 .map((i) => (react_1.default.createElement("button", { key: i, onClick: () => flipTo(i + 1), disabled: isFlipping }, i + 1))),
             pageWindowStart <= pages.length - 5 && (react_1.default.createElement("p", { className: ellipsisClassName }, "...")))),
-        react_1.default.createElement("button", { onClick: () => flip(Flipbook_1.PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping, className: buttonClassName + 'transform rotate-180' }, !buttonClassName && `->`)));
+        react_1.default.createElement("button", { onClick: () => flip(Flipbook_1.PageDirection.RIGHT), disabled: pageWindowStart >= pages.length - 2 || isFlipping, className: buttonClassName + ' transform rotate-180' }, !buttonClassName && `->`)));
 }
 exports.Controls = Controls;
 //# sourceMappingURL=Controls.js.map
