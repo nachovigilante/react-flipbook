@@ -15,7 +15,7 @@ function usePageWindow(pageCount, onPageChange) {
             onPageChange(state - 2);
             return state - 2;
         }
-    }, 0);
+    }, -2);
     const incrementWindow = () => dispatch({ type: 'INCREMENT' });
     const decrementWindow = () => dispatch({ type: 'DECREMENT' });
     return {
