@@ -16,12 +16,18 @@ export function Flipbook({
     pages,
     controls,
     controlsClassName,
+    buttonClassName,
+    pagesClassName,
+    ellipsisClassName,
     onPageChange,
 }: {
     pageSize: { width: number; height: number };
     pages: React.ReactNode[];
     controls?: boolean;
     controlsClassName?: string;
+    buttonClassName?: string;
+    pagesClassName?: string;
+    ellipsisClassName?: string;
     onPageChange?: (pageWindowStart: number) => void;
 }) {
     const bookRef = createRef<HTMLDivElement>();
@@ -252,6 +258,9 @@ export function Flipbook({
             {controls && (
                 <Controls
                     controlsClassName={controlsClassName}
+                    buttonClassName={buttonClassName}
+                    pagesClassName={pagesClassName}
+                    ellipsisClassName={ellipsisClassName}
                     flip={flip}
                     flipTo={flipTo}
                     pageWindowStart={pageWindowStart}

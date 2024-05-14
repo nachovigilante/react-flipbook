@@ -30,6 +30,7 @@ export const Page: React.FC = () => {
                     console.log(pageWindowStart)
                 }
                 controls={true}
+                controlsClassName=''
             />
         </div>
     );
