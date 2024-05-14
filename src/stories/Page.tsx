@@ -29,6 +29,7 @@ export const Page: React.FC = () => {
                 onPageChange={(pageWindowStart: number) =>
                     console.log(pageWindowStart)
                 }
+                controls={true}
             />
         </div>
     );

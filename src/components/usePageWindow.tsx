@@ -21,7 +21,7 @@ export default function usePageWindow(
                 return state - 2;
             }
         },
-        0
+        -2
     );
 
     const incrementWindow = () => dispatch({ type: 'INCREMENT' });

@@ -38,7 +38,6 @@ export function FlippingPageLeft({
         setFoldedHeight(foldedHeight);
         setTopFoldedLength(topFoldedLength);
         setCorrectedAngle(correctedAngle);
-        console.log(foldedLength);
         setXTranslation(-foldedLength / 2);
     }, [dragX, dragY, pageSize.width, pageSize.height]);
 
