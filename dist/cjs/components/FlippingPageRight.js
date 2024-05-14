@@ -27,7 +27,7 @@ exports.FlippingPageRight = void 0;
 const react_1 = __importStar(require("react"));
 const Page_1 = require("./Page");
 const util_1 = require("../utils/util");
-function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, rightPageChildren, invisible, }) {
+function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, rightPageChildren, invisible, setXTranslation, }) {
     const [rightClipPath, setRightClipPath] = (0, react_1.useState)('');
     const [leftClipPath, setLeftClipPath] = (0, react_1.useState)('');
     const [correctedAngle, setCorrectedAngle] = (0, react_1.useState)(0);
@@ -43,6 +43,7 @@ function FlippingPageRight({ pageSize, dragX, dragY, leftPageChildren, rightPage
         setFoldedHeight(foldedHeight);
         setTopFoldedLength(topFoldedLength);
         setCorrectedAngle(correctedAngle);
+        setXTranslation(-pageSize.width / 2 + foldedLength / 2);
     }, [dragX, dragY, pageSize.width, pageSize.height]);
     (0, react_1.useEffect)(() => {
         setRightClipPath(`polygon(

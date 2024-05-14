@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useEffect, useState, } from 'react';
 import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
@@ -173,6 +173,12 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, onPageC
         }
         setDraggingSide(null);
     };
+    const [xTranslationLeft, setXTranslationLeft] = useState(0);
+    const [xTranslationRight, setXTranslationRight] = useState(0);
+    useEffect(() => {
+        console.log(pageWindowStart);
+        console.log(pages.length);
+    }, [pageWindowStart]);
     return (React.createElement(React.Fragment, null,
         controls && (React.createElement("div", { className: controlsClassName, style: controlsClassName
                 ? {}
@@ -188,17 +194,19 @@ export function Flipbook({ pageSize, pages, controls, controlsClassName, onPageC
         React.createElement("div", { style: {
                 width: pageSize.width * 2,
                 height: pageSize.height,
-                // transform:
-                //     status === 'cover'
-                //         ? `translateX(-${pageSize.width / 2}px)`
-                //         : status === 'back'
-                //         ? `translateX(${pageSize.width / 2}px)`
-                //         : 'none',
-                // transition: 'transform 0.3s',
+                transform: pageWindowStart === -2
+                    ? `translateX(${xTranslationRight}px)`
+                    : pageWindowStart === 0
+                        ? `translateX(${xTranslationLeft}px)`
+                        : pageWindowStart === pages.length - 4
+                            ? `translateX(${pageSize.width / 2 + xTranslationRight}px)`
+                            : pageWindowStart === pages.length - 2
+                                ? `translateX(${pageSize.width / 2 + xTranslationLeft}px)`
+                                : `none`,
             }, ref: bookRef, onMouseMove: handleMouseMove, onMouseDown: handleMouseDown, onMouseUp: handleMouseUp },
             React.createElement(Page, Object.assign({}, pageSize, { side: "left", invisible: pageWindowStart <= 0 }), paddedPages[pageWindowStart]),
-            React.createElement(FlippingPageLeft, { pageSize: pageSize, dragX: leftDragX, dragY: leftDragY, rightPageChildren: paddedPages[pageWindowStart + 1], leftPageChildren: paddedPages[pageWindowStart + 2], invisible: pageWindowStart <= -2 }),
-            React.createElement(FlippingPageRight, { pageSize: pageSize, dragX: rightDragX, dragY: rightDragY, rightPageChildren: paddedPages[pageWindowStart + 3], leftPageChildren: paddedPages[pageWindowStart + 4], invisible: pageWindowStart >= pages.length - 2 }),
+            React.createElement(FlippingPageLeft, { pageSize: pageSize, dragX: leftDragX, dragY: leftDragY, rightPageChildren: paddedPages[pageWindowStart + 1], leftPageChildren: paddedPages[pageWindowStart + 2], invisible: pageWindowStart <= -2, setXTranslation: setXTranslationLeft }),
+            React.createElement(FlippingPageRight, { pageSize: pageSize, dragX: rightDragX, dragY: rightDragY, rightPageChildren: paddedPages[pageWindowStart + 3], leftPageChildren: paddedPages[pageWindowStart + 4], invisible: pageWindowStart >= pages.length - 2, setXTranslation: setXTranslationRight }),
             React.createElement(Page, Object.assign({}, pageSize, { side: "right", invisible: pageWindowStart >= pages.length - 4 }), paddedPages[pageWindowStart + 5]))));
 }
 //# sourceMappingURL=Flipbook.js.map
