@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Page } from './Page';
 import { calculateFlipping } from '../utils/util';
 
@@ -9,6 +9,7 @@ export function FlippingPageLeft({
     leftPageChildren,
     rightPageChildren,
     invisible,
+    setXTranslation,
 }: {
     pageSize: { width: number; height: number };
     dragX: number;
@@ -16,6 +17,7 @@ export function FlippingPageLeft({
     leftPageChildren: React.ReactNode;
     rightPageChildren: React.ReactNode;
     invisible?: boolean;
+    setXTranslation: Dispatch<SetStateAction<number>>;
 }) {
     const [rightClipPath, setRightClipPath] = useState('');
     const [leftClipPath, setLeftClipPath] = useState('');
@@ -36,6 +38,8 @@ export function FlippingPageLeft({
         setFoldedHeight(foldedHeight);
         setTopFoldedLength(topFoldedLength);
         setCorrectedAngle(correctedAngle);
+        console.log(foldedLength);
+        setXTranslation(-foldedLength / 2);
     }, [dragX, dragY, pageSize.width, pageSize.height]);
 
     useEffect(() => {

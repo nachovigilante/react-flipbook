@@ -1,4 +1,9 @@
-import React, { MouseEventHandler, createRef, useState } from 'react';
+import React, {
+    MouseEventHandler,
+    createRef,
+    useEffect,
+    useState,
+} from 'react';
 import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
@@ -226,6 +231,14 @@ export function Flipbook({
         setDraggingSide(null);
     };
 
+    const [xTranslationLeft, setXTranslationLeft] = useState(0);
+    const [xTranslationRight, setXTranslationRight] = useState(0);
+
+    useEffect(() => {
+        console.log(pageWindowStart);
+        console.log(pages.length);
+    }, [pageWindowStart]);
+
     return (
         <>
             {controls && (
@@ -261,13 +274,20 @@ export function Flipbook({
                 style={{
                     width: pageSize.width * 2,
                     height: pageSize.height,
-                    // transform:
-                    //     status === 'cover'
-                    //         ? `translateX(-${pageSize.width / 2}px)`
-                    //         : status === 'back'
-                    //         ? `translateX(${pageSize.width / 2}px)`
-                    //         : 'none',
-                    // transition: 'transform 0.3s',
+                    transform:
+                        pageWindowStart === -2
+                            ? `translateX(${xTranslationRight}px)`
+                            : pageWindowStart === 0
+                            ? `translateX(${xTranslationLeft}px)`
+                            : pageWindowStart === pages.length - 4
+                            ? `translateX(${
+                                  pageSize.width / 2 + xTranslationRight
+                              }px)`
+                            : pageWindowStart === pages.length - 2
+                            ? `translateX(${
+                                  pageSize.width / 2 + xTranslationLeft
+                              }px)`
+                            : `none`,
                 }}
                 ref={bookRef}
                 onMouseMove={handleMouseMove}
@@ -288,6 +308,7 @@ export function Flipbook({
                     rightPageChildren={paddedPages[pageWindowStart + 1]}
                     leftPageChildren={paddedPages[pageWindowStart + 2]}
                     invisible={pageWindowStart <= -2}
+                    setXTranslation={setXTranslationLeft}
                 />
                 <FlippingPageRight
                     pageSize={pageSize}
@@ -296,6 +317,7 @@ export function Flipbook({
                     rightPageChildren={paddedPages[pageWindowStart + 3]}
                     leftPageChildren={paddedPages[pageWindowStart + 4]}
                     invisible={pageWindowStart >= pages.length - 2}
+                    setXTranslation={setXTranslationRight}
                 />
                 <Page
                     {...pageSize}
