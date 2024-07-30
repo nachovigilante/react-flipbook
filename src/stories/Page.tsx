@@ -22,9 +22,7 @@ export const Page: React.FC = () => {
     ));
 
     return (
-        <div
-            className="container"
-        >
+        <div className="container">
             <Flipbook
                 pageSize={pageSize}
                 pages={pages}

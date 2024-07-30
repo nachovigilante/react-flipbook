@@ -1,6 +1,6 @@
 {
     "name": "react-flipbook-nv",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "A simple flipbook component for React canvasless",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",

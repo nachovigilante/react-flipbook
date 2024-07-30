@@ -1,8 +1,4 @@
-import React, {
-    MouseEventHandler,
-    createRef,
-    useState,
-} from 'react';
+import React, { MouseEventHandler, createRef, useState } from 'react';
 import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
