@@ -26,12 +26,13 @@ export function Controls({
 }) {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            e.preventDefault();
             if (e.key === 'ArrowLeft') {
+                e.preventDefault();
                 if (pageWindowStart > -2 && !isFlipping)
                     flip(PageDirection.LEFT);
             }
             if (e.key === 'ArrowRight') {
+                e.preventDefault();
                 if (pageWindowStart < pages.length - 2 && !isFlipping)
                     flip(PageDirection.RIGHT);
             }
