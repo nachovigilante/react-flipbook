@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PageDirection } from '../Flipbook';
 
 export function Controls({
@@ -24,6 +24,26 @@ export function Controls({
     isFlipping: boolean;
     pages: React.ReactNode[];
 }) {
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                if (pageWindowStart > -2 && !isFlipping)
+                    flip(PageDirection.LEFT);
+            }
+            if (e.key === 'ArrowRight') {
+                if (pageWindowStart < pages.length - 2 && !isFlipping)
+                    flip(PageDirection.RIGHT);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown, false);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown, false);
+        };
+    }, [pageWindowStart, isFlipping, flip, pages.length]);
+
     return (
         <div
             className={controlsClassName}

@@ -1,4 +1,8 @@
-import React, { MouseEventHandler, createRef, useState } from 'react';
+import React, {
+    MouseEventHandler,
+    createRef,
+    useState,
+} from 'react';
 import { Page } from './components/Page';
 import { FlippingPageRight } from './components/FlippingPageRight';
 import { FlippingPageLeft } from './components/FlippingPageLeft';
@@ -10,6 +14,12 @@ export enum PageDirection {
     LEFT,
     RIGHT,
 }
+
+export type ControlFunctions = {
+    flipLeft: () => void;
+    flipRight: () => void;
+    flipToPage: (index: number) => void;
+};
 
 export function Flipbook({
     pageSize,
@@ -82,7 +92,7 @@ export function Flipbook({
     ];
 
     const flip = (side: PageDirection, count = 1) => {
-        // bookRef.current!.style.cursor = 'default';
+        if (isFlipping) return;
 
         if (count === 0) return;
 
@@ -134,12 +144,6 @@ export function Flipbook({
 
     const flipTo = (index: number) => {
         const indexPageWindowStart = index % 2 ? index - 3 : index - 2;
-
-        console.log(
-            indexPageWindowStart,
-            pageWindowStart,
-            Math.abs(indexPageWindowStart - pageWindowStart) / 2
-        );
 
         flip(
             indexPageWindowStart > pageWindowStart
